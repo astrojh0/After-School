@@ -10,72 +10,63 @@
 
 body {
   font-family: 'Noto Sans JP', sans-serif;
-  background-color: #1a1a1a;
-  color: #e8e4df;
+  background-color: #f5f3f0;
+  color: #3a3a3a;
   min-height: 100vh;
-  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* CRT subtle scanline effect */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.03),
-    rgba(0, 0, 0, 0.03) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  z-index: 9999;
+/* 柔和滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
 
-/* Noise texture overlay */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.02;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  z-index: 9998;
+/* 呼吸动画 */
+@keyframes breathe-slow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
 }
 
-/* Digital glow effect */
-.digital-glow {
-  text-shadow: 
-    0 0 10px rgba(245, 166, 35, 0.5),
-    0 0 20px rgba(245, 166, 35, 0.3),
-    0 0 30px rgba(245, 166, 35, 0.1);
+/* 浮动动画 */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
-/* 呼吸效果 - Break block 专用 */
-@keyframes breathe {
-  0%, 100% { 
-    opacity: 0.5;
-  }
-  50% { 
-    opacity: 0.35;
-  }
+/* 摇晃动画 */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
 }
 
-.animate-breathe {
-  animation: breathe 6s ease-in-out infinite;
+/* 变形动画 */
+@keyframes morph {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  75% { transform: rotate(-3deg); }
 }
 
-/* 隐藏滚动条 */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+/* 弹簧动画类 */
+.animate-breathe-slow {
+  animation: breathe-slow 4s ease-in-out infinite;
 }
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+.animate-shake {
+  animation: shake 0.3s ease-in-out infinite;
+}
+.animate-morph {
+  animation: morph 2s ease-in-out infinite;
 }
